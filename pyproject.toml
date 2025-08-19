@@ -1,0 +1,23 @@
+[project]
+name = "my_ml_project"
+version = "0.1.0"
+description = "Reproducible ML project scaffold powered by uv"
+readme = "README.md"
+requires-python = ">= 3.13"
+authors = [{ name = "Javvy7", email = "cavidan.nuriyev.2018@mail.ru" }]
+dependencies = [
+    # runtime deps go here, e.g. "pandas>=2.2"
+    "requests>=2.32.5",
+]
+
+# [tool.ruff]
+# lint.extend-select = ["ALL"]
+
+[tool.black]
+line-length = 100
+extend-exclude = '^(data|reports|models|notebooks)/'
+
+[tool.isort]
+profile = "black" # keeps isort compatible with Black
+line_length = 100
+skip_glob = ["data/**", "reports/**", "models/**", "notebooks/**"]

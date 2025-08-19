@@ -1,3 +1,4 @@
+a = 0
 def main():
     print("Train your model")
 

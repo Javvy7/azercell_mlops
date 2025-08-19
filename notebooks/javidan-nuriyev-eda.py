@@ -16,7 +16,7 @@ import seaborn as sns
 import boto3
 bucket_name = 'dataminds-warehouse'
 s3_file_key = 'HousingPrices-Amsterdam-August-2021.csv'            # e.g. 'folder/myfile.txt'
-local_file_path = 'HousingPrices-Amsterdam-August-2021.csv'        # Local destination
+local_file_path = 'HousingPrices-Amsterdam-Au   gust-2021.csv'        # Local destination
 
 # Create an S3 client (remove `bucket_name` here — not a valid argument for boto3.client)
 s3 = boto3.client(

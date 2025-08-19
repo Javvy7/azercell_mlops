@@ -167,7 +167,6 @@ df.sort_values('Price', ascending=False).head(5)
 # In[17]:
 
 
-import boto3
 
 # Replace with your actual credentials and info
 bucket_name = 'dataminds-homeworks'

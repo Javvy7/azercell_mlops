@@ -7,7 +7,14 @@
 import numpy as np 
 import pandas as pd 
 import matplotlib.pyplot as plt 
-import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import RandomizedSearchCV
+
 
 
 # In[3]:
@@ -87,7 +94,6 @@ df_sample.set_index("telephone_number", inplace=True)
 # In[12]:
 
 
-from sklearn.model_selection import train_test_split
 
 
 # In[13]:
@@ -98,7 +104,6 @@ X = df_sample.drop(columns=["data_compl_usg_local_m1"])
 y = df_sample["data_compl_usg_local_m1"]
 
 # Train-test split
-from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 
@@ -116,9 +121,7 @@ numerical_features = [col for col in X.columns if col not in categorical_feature
 # In[15]:
 
 
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+
 
 
 # In[16]:
@@ -142,8 +145,6 @@ preprocessor = ColumnTransformer(
 # In[17]:
 
 
-from sklearn.ensemble import RandomForestRegressor
-
 
 # In[18]:
 
@@ -165,11 +166,6 @@ model.fit(X_train, y_train)
 
 model.score(X_test, y_test)
 
-
-# In[21]:
-
-
-from sklearn.metrics import mean_squared_error
 
 
 # In[22]:
@@ -195,12 +191,6 @@ plt.show()
 model.named_steps["regressor"].feature_importances_
 
 
-# In[25]:
-
-
-from sklearn.model_selection import RandomizedSearchCV
-
-
 # In[28]:
 
 
@@ -222,7 +212,6 @@ print("Best parameters:", search.best_params_)
 # In[27]:
 
 
-import boto3
 
 # Replace with your actual credentials and info
 bucket_name = 'dataminds-homeworks'

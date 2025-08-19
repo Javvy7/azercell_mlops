@@ -5,6 +5,23 @@
 
 
 import boto3
+import pandas as pd 
+import matplotlib.pyplot as plt 
+import numpy as np 
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler, OrdinalEncoder
+from sklearn.compose import ColumnTransformer
+import xgboost as xgb
+from sklearn.model_selection import GridSearchCV
+from xgboost import XGBClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+
+
+
+
 bucket_name = 'dataminds-warehouse'
 s3_file_key = 'multisim_dataset.parquet'            # e.g. 'folder/myfile.txt'
 local_file_path = 'multisim_dataset.parquet'        # Local destination
@@ -23,15 +40,6 @@ try:
     print(f"✅ File downloaded successfully from s3://{bucket_name}/{s3_file_key} to {local_file_path}")
 except Exception as e:
     print("❌ Error downloading file:", e)
-
-
-# In[2]:
-
-
-import pandas as pd 
-import matplotlib.pyplot as plt 
-import numpy as np 
-import seaborn as sns
 
 
 # In[3]:
@@ -128,10 +136,7 @@ X = df.drop(columns=['target'])
 y = df['target']
 
 
-# In[17]:
 
-
-from sklearn.model_selection import train_test_split
 
 
 # In[18]:
@@ -147,14 +152,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 cat_cols = X_train.select_dtypes(include=['object']).columns.tolist()
 num_cols = X_train.select_dtypes(exclude=['object']).columns.tolist()
 
-
-# In[20]:
-
-
-from sklearn.pipeline import Pipeline
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler, OrdinalEncoder
-from sklearn.compose import ColumnTransformer
 
 
 # In[21]:
@@ -177,11 +174,6 @@ preprocessor = ColumnTransformer(transformers=[
 ])
 
 
-# In[22]:
-
-
-import xgboost as xgb
-
 
 # In[23]:
 
@@ -200,10 +192,6 @@ pipeline = Pipeline(steps=[
 ])
 
 
-# In[24]:
-
-
-from sklearn.model_selection import GridSearchCV
 
 
 # In[25]:
@@ -240,12 +228,6 @@ grid_search.fit(X_train, y_train)
 print("Best Parameters:", grid_search.best_params_)
 
 
-# In[28]:
-
-
-from xgboost import XGBClassifier
-
-
 # In[29]:
 
 
@@ -270,10 +252,6 @@ final_model.fit(X_train_processed, y_train)
 y_pred = final_model.predict(X_test_processed)
 
 
-# In[31]:
-
-
-from sklearn.metrics import classification_report, confusion_matrix
 
 
 # In[32]:
@@ -302,7 +280,6 @@ plt.show()
 # In[35]:
 
 
-import boto3
 
 # Replace with your actual credentials and info
 bucket_name = 'dataminds-homeworks'

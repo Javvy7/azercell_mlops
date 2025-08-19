@@ -3,8 +3,22 @@
 
 # In[1]:
 
-
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 import boto3
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from category_encoders import CatBoostEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.compose import ColumnTransformer
+from catboost import CatBoostRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+
+
+
+
+
 bucket_name = 'dataminds-warehouse'
 s3_file_key = 'ramen-ratings.csv'            # e.g. 'folder/myfile.txt'
 local_file_path = 'ramen-ratings.csv'        # Local destination
@@ -25,12 +39,6 @@ except Exception as e:
     print("❌ Error downloading file:", e)
 
 
-# In[2]:
-
-
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 
 
 # In[3]:
@@ -59,10 +67,6 @@ X = df[["Brand", "Style", "Country", "Top_Ten_Binary"]]
 y = df["Stars"]
 
 
-# In[7]:
-
-
-from sklearn.model_selection import train_test_split
 
 
 # In[8]:
@@ -78,13 +82,6 @@ categorical_cols = ["Brand", "Style", "Country"]
 numeric_cols = ["Top_Ten_Binary"]
 
 
-# In[10]:
-
-
-from sklearn.pipeline import Pipeline
-from category_encoders import CatBoostEncoder
-from sklearn.impute import SimpleImputer
-
 
 # In[11]:
 
@@ -99,10 +96,9 @@ numeric_pipeline = Pipeline([
 ])
 
 
-# In[12]:
 
 
-from sklearn.compose import ColumnTransformer
+
 
 
 # In[13]:
@@ -115,9 +111,6 @@ preprocessor = ColumnTransformer([
 
 
 # In[14]:
-
-
-from catboost import CatBoostRegressor
 
 
 # In[15]:
@@ -134,11 +127,6 @@ model_pipeline = Pipeline([
 
 model_pipeline.fit(X_train, y_train)
 
-
-# In[18]:
-
-
-from sklearn.metrics import mean_squared_error, r2_score
 
 
 # In[19]:
@@ -159,7 +147,7 @@ print(rmse)
 # In[22]:
 
 
-import boto3
+
 
 # Replace with your actual credentials and info
 bucket_name = 'dataminds-homeworks'
@@ -178,10 +166,6 @@ try:
 except Exception as e:
     print("Error uploading file:", e)
 
- 
-
-
-# In[ ]:
 
 
 

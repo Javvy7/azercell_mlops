@@ -1,4 +1,5 @@
 import streamlit as st
+<<<<<<< HEAD
 import pandas as pd
 import requests
 
@@ -29,3 +30,17 @@ if uploaded_file is not None:
                 st.error(f"Backend error: {response.status_code}")
         except Exception as e:
             st.error(f"Error connecting to backend: {e}")
+=======
+import requests
+
+st.title("ML Prediction App")
+
+input_data = st.text_input("Enter some data:")
+
+if st.button("Predict"):
+    response = requests.post("http://<23.21.85.1>:8000/predict", json={"data": input_data})
+    if response.status_code == 200:
+        st.write("Prediction:", response.json())
+    else:
+        st.write("Error:", response.text)
+>>>>>>> 4eacef0 (Initial commit from EC2)

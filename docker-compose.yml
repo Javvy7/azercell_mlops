@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    volumes:
+      - ./models/model.pkl:/app/models/model.pkl
+      - ./data/external/multisim_dataset.parquet:/app/data/external/multisim_dataset.parquet
+    ports:
+      - "8000:8000"
+
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+    restart: unless-stopped

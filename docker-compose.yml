@@ -5,11 +5,13 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    container_name: backend
     volumes:
-      - ./models:/app/models
-      - ./data:/app/data
+      - ./models/model.pkl:/app/models/model.pkl
+      - ./data/external/multisim_dataset.parquet:/app/data/external/multisim_dataset.parquet
     ports:
       - "8000:8000"
+    restart: unless-stopped
 
   frontend:
     build:

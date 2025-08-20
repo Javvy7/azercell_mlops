@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import pandas as pd
 import joblib
 import os
+import numpy as np  # əlavə etdik
 
 # Backend FastAPI server
 app = FastAPI(title="ML Prediction API")
@@ -34,4 +35,7 @@ def predict():
 
     preds = model.predict(df)
 
-    return {"predictions": preds.tolist()}
+    # NaN və inf dəyərləri təmizləyirik
+    preds_clean = np.nan_to_num(preds, nan=0.0, posinf=0.0, neginf=0.0).tolist()
+
+    return {"predictions": preds_clean}

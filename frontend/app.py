@@ -5,6 +5,10 @@ import requests
 st.set_page_config(page_title="ML Prediction App", layout="wide")
 st.title("ML Prediction Web App")
 
+st.markdown("""
+Upload your dataset (Parquet file) and get predictions from the backend ML model.
+""")
+
 uploaded_file = st.file_uploader("Choose a Parquet file", type="parquet")
 
 if uploaded_file is not None:
@@ -14,11 +18,13 @@ if uploaded_file is not None:
 
     if st.button("Run Prediction"):
         try:
-            backend_url = "http://backend:8000/predict"  # Docker Compose servisi adı
-            response = requests.post(backend_url, json={"data": df.to_dict(orient="records")})
+            # Backend URL using Docker Compose service name
+            backend_url = "http://backend:8000/predict"
+            response = requests.post(backend_url)
             if response.status_code == 200:
+                preds = response.json()["predictions"]
                 st.subheader("Predictions")
-                st.write(response.json()["predictions"])
+                st.write(preds[:20])  # İlk 20 nəticəni göstər
             else:
                 st.error(f"Backend error: {response.status_code}")
         except Exception as e:

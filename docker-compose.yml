@@ -3,13 +3,16 @@ version: "3.9"
 services:
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "8000:8000"
     volumes:
       - ./models/model.pkl:/app/models/model.pkl
       - ./data/external/multisim_dataset.parquet:/app/data/external/multisim_dataset.parquet
-    ports:
-      - "8000:8000"
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
 
   frontend:
     build:
